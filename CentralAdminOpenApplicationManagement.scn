@@ -63,7 +63,7 @@
               <DataProvider AssemblyQualifiedName="MS.Internal.Motif.Runtime.AssemblyData, Motif" Version="3.2">
                 <AssemblyData>
                   <Assemblies>
-                    <Assembly>//builttestcasefiles/ststest/{Processor}/{BuildType}/x-none/ms.internal.test.automation.office.osg.wss.tests.dll</Assembly>
+                    <Assembly>C:/Users/cloudtest/Downloads/ms.internal.test.automation.office.osg.wss.tests.dll</Assembly>
                   </Assemblies>
                   <Dependencies>
                     <Dependency>//builttestcasefiles/sptasklib/{processor}/{buildtype}/{culture}/References/WebDriver/owebdriver.dll</Dependency>
