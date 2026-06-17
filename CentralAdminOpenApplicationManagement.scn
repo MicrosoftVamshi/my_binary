@@ -63,7 +63,7 @@
               <DataProvider AssemblyQualifiedName="MS.Internal.Motif.Runtime.AssemblyData, Motif" Version="3.2">
                 <AssemblyData>
                   <Assemblies>
-                    <Assembly>C:/Users/cloudtest/Downloads/centraladminuifirst.otl/ms.internal.test.automation.office.osg.wss.tests.dll</Assembly>
+                    <Assembly>//builttestcasefiles/ststest/{Processor}/{BuildType}/x-none/ms.internal.test.automation.office.osg.wss.tests.dll</Assembly>
                   </Assemblies>
                   <Dependencies>
                     <Dependency>//builttestcasefiles/sptasklib/{processor}/{buildtype}/{culture}/References/WebDriver/owebdriver.dll</Dependency>
@@ -4895,7 +4895,6 @@
                     <SupportFile Dependency="True">//warehouse/otools/cross/cross/x-none/bin/powershell/System.Management.Automation.dll</SupportFile>
                     <SupportFile Dependency="True">//warehouse/otools/cross/cross/x-none/bin/powershell/v2.0/rc/System.Management.Automation.dll</SupportFile>
                     <SupportFile Dependency="True">//warehouse/otools/cross/cross/x-none/bin/powershell/v2.0/rtm/System.Management.Automation.dll</SupportFile>
-                    <SupportFile>//warehouse/selenium/cross/cross/x-none/microsoftwebdriver.exe</SupportFile>
                     <SupportFile Dependency="True">//warehouse/selenium/cross/cross/x-none/Selenium.WebDriverBackedSelenium.dll</SupportFile>
                     <SupportFile Dependency="True">//warehouse/selenium/cross/cross/x-none/ThoughtWorks.Selenium.Core.dll</SupportFile>
                     <SupportFile Dependency="True">//warehouse/selenium/cross/cross/x-none/webdriver.dll</SupportFile>
