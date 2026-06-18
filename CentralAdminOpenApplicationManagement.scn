@@ -4895,6 +4895,7 @@
                     <SupportFile Dependency="True">//warehouse/otools/cross/cross/x-none/bin/powershell/System.Management.Automation.dll</SupportFile>
                     <SupportFile Dependency="True">//warehouse/otools/cross/cross/x-none/bin/powershell/v2.0/rc/System.Management.Automation.dll</SupportFile>
                     <SupportFile Dependency="True">//warehouse/otools/cross/cross/x-none/bin/powershell/v2.0/rtm/System.Management.Automation.dll</SupportFile>
+                    <SupportFile>//warehouse/selenium/cross/cross/x-none/microsoftwebdriver.exe</SupportFile>
                     <SupportFile Dependency="True">//warehouse/selenium/cross/cross/x-none/Selenium.WebDriverBackedSelenium.dll</SupportFile>
                     <SupportFile Dependency="True">//warehouse/selenium/cross/cross/x-none/ThoughtWorks.Selenium.Core.dll</SupportFile>
                     <SupportFile Dependency="True">//warehouse/selenium/cross/cross/x-none/webdriver.dll</SupportFile>
