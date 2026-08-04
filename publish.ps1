@@ -7,8 +7,10 @@ $iter = Join-Path $root '_iter'
 
 Remove-Item $iter -Recurse -Force -ErrorAction SilentlyContinue
 New-Item -ItemType Directory -Force -Path (Join-Path $iter 'WssTestsDllPortable\src\RBS') | Out-Null
+New-Item -ItemType Directory -Force -Path (Join-Path $iter 'SCNS\rbs') | Out-Null
 Copy-Item (Join-Path $root '_stage\scripts') (Join-Path $iter 'scripts') -Recurse -Force
 Copy-Item 'C:\Users\v-vemmadi\Music\WssTestsDllPortable\src\RBS\RBS_Smoke.cs' (Join-Path $iter 'WssTestsDllPortable\src\RBS\RBS_Smoke.cs') -Force
+Copy-Item 'C:\Users\v-vemmadi\Music\SCNS\rbs\*.scn' (Join-Path $iter 'SCNS\rbs') -Force
 
 $package = Join-Path $root 'pkg\pkg_run.7z'
 Remove-Item $package -Force -ErrorAction SilentlyContinue
