@@ -8,12 +8,16 @@ $password = 'Srch!Drop#2026-0804$kQ9wR'
 $sevenZip = 'C:\Program Files\7-Zip\7z.exe'
 $iter = Join-Path $root '_iter'
 $localSearch = Join-Path $iter 'WssTestsDllPortable\src\Local_Search'
+$spqa = Join-Path $iter 'WssTestsDllPortable\src\SPQA\DriverMethods'
 
 Remove-Item $iter -Recurse -Force -ErrorAction SilentlyContinue
-New-Item -ItemType Directory -Force -Path $localSearch | Out-Null
+New-Item -ItemType Directory -Force -Path $localSearch, $spqa | Out-Null
 
 Copy-Item (Join-Path $root '_stage\scripts') (Join-Path $iter 'scripts') -Recurse -Force
 Copy-Item 'C:\Users\v-vemmadi\Music\WssTestsDllPortable\src\Local_Search\*.cs' $localSearch -Force
+# SPQA ships in the same push as Local_Search and the test consumes it directly, so an iteration
+# that changed Locator/MotifDriver must carry them or the VM builds the old driver helpers.
+Copy-Item 'C:\Users\v-vemmadi\Music\WssTestsDllPortable\src\SPQA\DriverMethods\*.cs' $spqa -Force
 
 $package = Join-Path $root 'pkg\pkg_run.7z'
 Remove-Item $package -Force -ErrorAction SilentlyContinue
