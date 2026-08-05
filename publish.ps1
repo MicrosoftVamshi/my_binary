@@ -21,8 +21,39 @@ Remove-Item $iter -Recurse -Force -ErrorAction SilentlyContinue
 New-Item -ItemType Directory -Force -Path (Join-Path $iter 'WssTestsDllPortable\src\RBS') | Out-Null
 New-Item -ItemType Directory -Force -Path (Join-Path $iter 'SCNS\rbs') | Out-Null
 Copy-Item (Join-Path $root '_stage\scripts') (Join-Path $iter 'scripts') -Recurse -Force
-Copy-Item 'C:\Users\v-vemmadi\Music\WssTestsDllPortable\src\RBS\RBS_Smoke.cs' (Join-Path $iter 'WssTestsDllPortable\src\RBS\RBS_Smoke.cs') -Force
 Copy-Item 'C:\Users\v-vemmadi\Music\SCNS\rbs\*.scn' (Join-Path $iter 'SCNS\rbs') -Force
+
+# The VM builds from pkg_src.7z (published once from search_drop\_stage) overlaid with this
+# package. Shipping only RBS_Smoke.cs left the VM compiling the *stale* copy of every other
+# file that has changed locally since pkg_src.7z was cut - which broke the build on an
+# unrelated file (SearchTestHelpers.cs: "No overload for method 'Comment' takes 1 arguments").
+# So ship the whole src delta: every file that differs from, or is missing in, the published
+# source snapshot. That keeps the VM tree byte-identical to the local tree.
+$localSrc = 'C:\Users\v-vemmadi\Music\WssTestsDllPortable\src'
+$snapshotSrc = 'C:\Users\v-vemmadi\Music\search_drop\_stage\WssTestsDllPortable\src'
+if (-not (Test-Path $snapshotSrc)) { throw "Published source snapshot is missing: $snapshotSrc" }
+
+$snapshot = @{}
+foreach ($file in (Get-ChildItem $snapshotSrc -Recurse -File)) {
+    $snapshot[$file.FullName.Substring($snapshotSrc.Length + 1)] = (Get-FileHash $file.FullName -Algorithm SHA256).Hash
+}
+
+$shipped = @()
+foreach ($file in (Get-ChildItem $localSrc -Recurse -File)) {
+    $relative = $file.FullName.Substring($localSrc.Length + 1)
+    $hash = (Get-FileHash $file.FullName -Algorithm SHA256).Hash
+    if ($snapshot.ContainsKey($relative) -and $snapshot[$relative] -eq $hash) { continue }
+
+    $destination = Join-Path $iter (Join-Path 'WssTestsDllPortable\src' $relative)
+    New-Item -ItemType Directory -Force -Path (Split-Path $destination -Parent) | Out-Null
+    Copy-Item -LiteralPath $file.FullName -Destination $destination -Force
+    $shipped += $relative
+}
+
+if ($shipped -notcontains 'RBS\RBS_Smoke.cs') {
+    throw 'RBS\RBS_Smoke.cs is identical to the published snapshot - refusing to publish a no-op package.'
+}
+Write-Output ("shipping src delta: " + ($shipped -join ', '))
 
 # Refresh.ps1 needs the password to re-extract on the VM. It is injected here, so the literal only
 # ever exists inside the encrypted archive (and on the VM after extraction), never in git.
