@@ -29,7 +29,6 @@ $manifestLines = @(Get-Content -LiteralPath $sourceManifest | Where-Object {
 })
 $localSearchEntries = @(
 	'Local_Search\BrowserResidueScope.cs'
-	'Local_Search\ChromeSetup.cs'
 	'Local_Search\SearchPageObjects.cs'
 	'Local_Search\SearchServiceApplication.cs'
 )
