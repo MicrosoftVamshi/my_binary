@@ -19,9 +19,30 @@ Remove-Item $iter -Recurse -Force -ErrorAction SilentlyContinue
 New-Item -ItemType Directory -Force -Path $localSearch, $spqa, $manifest, $scnDir | Out-Null
 
 Copy-Item (Join-Path $root '_stage\scripts') (Join-Path $iter 'scripts') -Recurse -Force
-Copy-Item 'C:\Users\v-vemmadi\Music\WssTestsDllPortable\src\Local_Search\*.cs' $localSearch -Force
+Copy-Item 'C:\office\src\ststest\tests\Local_Search\*.cs' $localSearch -Force
 Copy-Item 'C:\Users\v-vemmadi\Music\WssTestsDllPortable\manifest\sources.txt' $manifest -Force
-Copy-Item 'C:\Users\v-vemmadi\Music\WssTestsDllPortable\src\Local_Search\SearchServiceApplication.scn' $scnDir -Force
+Copy-Item 'C:\office\src\ststest\tests\Local_Search\SearchServiceApplication.scn' $scnDir -Force
+
+$sourceManifest = Join-Path $manifest 'sources.txt'
+$manifestLines = @(Get-Content -LiteralPath $sourceManifest | Where-Object {
+	$_ -ne 'Local_Search\SearchTestHelpers.cs' -and $_ -notlike 'Local_Search\*'
+})
+$localSearchEntries = @(
+	'Local_Search\BrowserResidueScope.cs'
+	'Local_Search\ChromeSetup.cs'
+	'Local_Search\SearchPageObjects.cs'
+	'Local_Search\SearchServiceApplication.cs'
+)
+$insertAt = [Array]::IndexOf($manifestLines, 'MobileAlert\MobileAccount\MobileAccountTestClass.cs')
+if ($insertAt -lt 0) { throw 'Could not locate the Local_Search insertion point in sources.txt' }
+$manifestLines = @($manifestLines[0..($insertAt - 1)]) + $localSearchEntries + @($manifestLines[$insertAt..($manifestLines.Count - 1)])
+Set-Content -LiteralPath $sourceManifest -Value $manifestLines -Encoding UTF8
+
+foreach ($entry in $localSearchEntries) {
+	if (-not (Test-Path -LiteralPath (Join-Path (Join-Path $iter 'WssTestsDllPortable\src') $entry))) {
+		throw "Iteration payload is missing $entry"
+	}
+}
 # SPQA ships in the same push as Local_Search and the test consumes it directly, so an iteration
 # that changed Locator/MotifDriver must carry them or the VM builds the old driver helpers.
 Copy-Item 'C:\Users\v-vemmadi\Music\WssTestsDllPortable\src\SPQA\DriverMethods\*.cs' $spqa -Force
