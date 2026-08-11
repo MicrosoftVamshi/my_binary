@@ -6,15 +6,22 @@ $ErrorActionPreference = 'Stop'
 $root = 'C:\Users\v-vemmadi\Music\search_drop'
 $password = 'Srch!Drop#2026-0804$kQ9wR'
 $sevenZip = 'C:\Program Files\7-Zip\7z.exe'
+if (-not (Test-Path $sevenZip)) {
+	$sevenZip = Join-Path $root 'tools\7z.exe'
+}
 $iter = Join-Path $root '_iter'
 $localSearch = Join-Path $iter 'WssTestsDllPortable\src\Local_Search'
 $spqa = Join-Path $iter 'WssTestsDllPortable\src\SPQA\DriverMethods'
+$manifest = Join-Path $iter 'WssTestsDllPortable\manifest'
+$scnDir = Join-Path $iter 'SCNS\local_search'
 
 Remove-Item $iter -Recurse -Force -ErrorAction SilentlyContinue
-New-Item -ItemType Directory -Force -Path $localSearch, $spqa | Out-Null
+New-Item -ItemType Directory -Force -Path $localSearch, $spqa, $manifest, $scnDir | Out-Null
 
 Copy-Item (Join-Path $root '_stage\scripts') (Join-Path $iter 'scripts') -Recurse -Force
 Copy-Item 'C:\Users\v-vemmadi\Music\WssTestsDllPortable\src\Local_Search\*.cs' $localSearch -Force
+Copy-Item 'C:\Users\v-vemmadi\Music\WssTestsDllPortable\manifest\sources.txt' $manifest -Force
+Copy-Item 'C:\Users\v-vemmadi\Music\WssTestsDllPortable\src\Local_Search\SearchServiceApplication.scn' $scnDir -Force
 # SPQA ships in the same push as Local_Search and the test consumes it directly, so an iteration
 # that changed Locator/MotifDriver must carry them or the VM builds the old driver helpers.
 Copy-Item 'C:\Users\v-vemmadi\Music\WssTestsDllPortable\src\SPQA\DriverMethods\*.cs' $spqa -Force
