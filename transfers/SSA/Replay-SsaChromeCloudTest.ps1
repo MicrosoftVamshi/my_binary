@@ -11,15 +11,15 @@ $runId = 'SSAChrome_' + (Get-Date -Format 'yyyyMMdd_HHmmss')
 $logDirectory = Join-Path 'C:\data\CHT\7c4c4287\Reruns' $runId
 $report = Join-Path $root 'run-report.txt'
 
-foreach ($required in @($psinfo, $scenario, $context)) {
-    if (-not (Test-Path -LiteralPath $required -PathType Leaf)) { throw "Required replay input missing: $required" }
-}
+if (-not (Test-Path -LiteralPath $psinfo)) { throw "Required replay input missing: $psinfo" }
+if (-not (Test-Path -LiteralPath $scenario)) { throw "Required replay input missing: $scenario" }
+if (-not (Test-Path -LiteralPath $context)) { throw "Required replay input missing: $context" }
 New-Item -ItemType Directory -Path $logDirectory -Force | Out-Null
 
 $section = ''
 $environment = @{}
 $startup = @{}
-foreach ($line in Get-Content -LiteralPath $psinfo) {
+foreach ($line in (Get-Content -LiteralPath $psinfo)) {
     if ($line -match '^\[(?<section>[^]]+)\]$') {
         $section = $Matches.section
         continue
