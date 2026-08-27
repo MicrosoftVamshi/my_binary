@@ -67,12 +67,14 @@ $errorText | Set-Content $stderr
 $otls = @(Get-ChildItem $logDirectory -Recurse -File -Include *.otl -ErrorAction SilentlyContinue)
 $resultsLogs = @(Get-ChildItem $logDirectory -Recurse -File -Include Results.log,*.Results.log -ErrorAction SilentlyContinue)
 $evidence = @()
-foreach ($path in @($resultsLogs.FullName)) {
+foreach ($path in @($resultsLogs | ForEach-Object { $_.FullName } | Where-Object { $_ })) {
     $evidence += @(Select-String -LiteralPath $path -Pattern 'TESTS PASSED|TESTS FAILED|PASS:|FAIL:' -ErrorAction SilentlyContinue | Select-Object -Last 80 | ForEach-Object { $_.Line })
 }
-foreach ($path in @($otls.FullName)) {
+foreach ($path in @($otls | ForEach-Object { $_.FullName } | Where-Object { $_ })) {
     $evidence += @(Select-String -LiteralPath $path -Pattern 'TESTS PASSED|TESTS FAILED|PASS:|FAIL:' -ErrorAction SilentlyContinue | Select-Object -Last 80 | ForEach-Object { $_.Line })
 }
+$stdoutTail = @(Get-Content -LiteralPath $stdout -ErrorAction SilentlyContinue | Select-Object -Last 40)
+$stderrTail = @(Get-Content -LiteralPath $stderr -ErrorAction SilentlyContinue | Select-Object -Last 40)
 
 $lines = @(
     "RUN_ID=$runId"
@@ -86,6 +88,12 @@ $lines = @(
 )
 $lines += $otls | ForEach-Object { "OTL=$($_.FullName)" }
 $lines += $resultsLogs | ForEach-Object { "RESULTS_LOG=$($_.FullName)" }
+$lines += 'STDOUT_BEGIN'
+$lines += $stdoutTail
+$lines += 'STDOUT_END'
+$lines += 'STDERR_BEGIN'
+$lines += $stderrTail
+$lines += 'STDERR_END'
 $lines += 'EVIDENCE_BEGIN'
 $lines += $evidence
 $lines += 'EVIDENCE_END'
