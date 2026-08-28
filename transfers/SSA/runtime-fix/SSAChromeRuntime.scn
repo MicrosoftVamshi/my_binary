@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<TestData Version="2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <DataProviders>
+    <DataProvider Description=""
+                  AssemblyQualifiedName="MS.Internal.Motif.Runtime.TestSuiteData, Motif, Version=13.0.0.0, Culture=neutral, PublicKeyToken=48e046c834625a88">
+
+      <TestSuiteData>
+        <TestSuites>
+
+          <TestSuite Version="1.0" UserDescription="Search Service Application All Links Check">
+
+            <DataProviders>
+
+              <!-- TEST CLASS -->
+              <DataProvider Description=""
+                            AssemblyQualifiedName="MS.Internal.Motif.Runtime.TestClassData, Motif, Version=13.0.0.0, Culture=neutral, PublicKeyToken=48e046c834625a88">
+
+                <TestClassData>
+                  <TestClasses>
+
+                    <TestClass Version="1.0"
+                               AssemblyQualifiedName="MS.Internal.Test.Automation.Office.Osg.Wss.Tests.ChromeSetup, ms.internal.test.automation.office.osg.wss.tests, Version=13.0.0.0, Culture=neutral, PublicKeyToken=48e046c834625a88"
+                               Enabled="true"
+                               Explicit="true">
+
+                      <DataProviders>
+
+                        <DataProvider Description=""
+                                      AssemblyQualifiedName="MS.Internal.Motif.Runtime.TestMethodData, Motif, Version=13.0.0.0, Culture=neutral, PublicKeyToken=48e046c834625a88">
+
+                          <TestMethodData>
+                            <TestMethods>
+                              <TestMethod Signature="Void InstallCompatibleChrome()"
+                                          DeclaringType="MS.Internal.Test.Automation.Office.Osg.Wss.Tests.ChromeSetup"
+                                          Enabled="true" />
+                            </TestMethods>
+                          </TestMethodData>
+                        </DataProvider>
+
+                      </DataProviders>
+                    </TestClass>
+
+                    <TestClass Version="1.0"
+                               AssemblyQualifiedName="MS.Internal.Test.Automation.Office.Osg.Wss.Tests.SearchServiceApplication, ms.internal.test.automation.office.osg.wss.tests, Version=13.0.0.0, Culture=neutral, PublicKeyToken=48e046c834625a88"
+                               Enabled="true"
+                               Explicit="true">
+
+                      <DataProviders>
+
+                        <!-- CONTEXT -->
+                        <DataProvider Description=""
+                                      AssemblyQualifiedName="MS.Internal.Motif.Context.XmlContext, Motif, Version=13.0.0.0, Culture=neutral, PublicKeyToken=48e046c834625a88">
+
+                          <Context Version="1.0">
+                            <Nodes>
+                              <Node Name="MS">
+                                <Nodes>
+                                  <Node Name="Internal">
+                                    <Nodes>
+                                      <Node Name="Motif">
+                                        <Nodes>
+                                          <Node Name="TestClasses">
+                                            <Nodes>
+                                              <Node Name="OfficeTestClass">
+                                                <Values>
+                                                  <Value Name="StringGeneratorSeed" TypeName="System.String">
+                                                    <string />
+                                                  </Value>
+
+                                                  <Value Name="StringGeneratorLCID" TypeName="System.Int32">
+                                                    <int>0</int>
+                                                  </Value>
+                                                </Values>
+                                              </Node>
+                                            </Nodes>
+                                          </Node>
+                                        </Nodes>
+                                      </Node>
+                                    </Nodes>
+                                  </Node>
+                                </Nodes>
+                              </Node>
+                            </Nodes>
+                          </Context>
+                        </DataProvider>
+
+                        <!-- METHOD ORDER -->
+                        <DataProvider Description=""
+                                      AssemblyQualifiedName="MS.Internal.Motif.Runtime.TestMethodData, Motif, Version=13.0.0.0, Culture=neutral, PublicKeyToken=48e046c834625a88">
+
+                          <TestMethodData>
+                            <TestMethods>
+
+                              <!-- BASE -->
+                              <TestMethod Signature="Void OASysSetup()"
+                                          DeclaringType="MS.Internal.Motif.TestClasses.OfficeTestClass"
+                                          Enabled="true" />
+
+                              <TestMethod Signature="Void OSGSetup()"
+                                          DeclaringType="MS.Internal.Test.Automation.Office.OSG.TestClasses.OSGTestClass"
+                                          Enabled="true" />
+
+                              <!-- YOUR METHODS -->
+                              <TestMethod Signature="Void Initialize()"
+                                          DeclaringType="MS.Internal.Test.Automation.Office.Osg.Wss.Tests.SearchServiceApplication"
+                                          Enabled="true" />
+
+                              <TestMethod Signature="Void Check_SearchServiceApplication()"
+                                          DeclaringType="MS.Internal.Test.Automation.Office.Osg.Wss.Tests.SearchServiceApplication"
+                                          Enabled="true" />
+
+                              <TestMethod Signature="Void CleanUp()"
+                                          DeclaringType="MS.Internal.Test.Automation.Office.Osg.Wss.Tests.SearchServiceApplication"
+                                          Enabled="true" />
+
+                              <!-- BASE -->
+                              <TestMethod Signature="Void OSGTeardown()"
+                                          DeclaringType="MS.Internal.Test.Automation.Office.OSG.TestClasses.OSGTestClass"
+                                          Enabled="true" />
+
+                              <TestMethod Signature="Void OASysTeardown()"
+                                          DeclaringType="MS.Internal.Motif.TestClasses.OfficeTestClass"
+                                          Enabled="true" />
+
+                            </TestMethods>
+                          </TestMethodData>
+                        </DataProvider>
+
+                      </DataProviders>
+                    </TestClass>
+
+                  </TestClasses>
+                </TestClassData>
+              </DataProvider>
+
+              <!-- LOAD DLL -->
+              <DataProvider Description=""
+                            AssemblyQualifiedName="MS.Internal.Motif.FileDepot.FileDepotAssemblyData, Motif, Version=13.0.0.0, Culture=neutral, PublicKeyToken=48e046c834625a88">
+
+                <AssemblyData>
+                  <Assemblies>
+                    <Assembly>//builttestcasefiles/ststest/{Processor}/{BuildType}/x-none/ms.internal.test.automation.office.osg.wss.tests.dll</Assembly>
+                  </Assemblies>
+
+                  <Dependencies>
+                    <Dependency>//builttestcasefiles/sptasklib/{processor}/{buildtype}/{culture}/References/WebDriver/owebdriver.dll</Dependency>
+                  </Dependencies>
+                </AssemblyData>
+
+              </DataProvider>
+
+              <DataProvider Description=""
+                            AssemblyQualifiedName="MS.Internal.Motif.FileDepot.SupportFileData, Motif, Version=13.0.0.0, Culture=neutral, PublicKeyToken=48e046c834625a88">
+
+                <SupportFileData>
+                  <SupportFiles>
+                    <SupportFile FileAlias="chromedriverlauncher"
+                                 AutoCache="true"
+                                 Cache="WorkingCache"
+                                 Recurse="NoRecurse"
+                                 FileType="Data">//builttestcasefiles/webautoex/{processor}/{buildtype}/x-none/chromedriverlauncher.exe</SupportFile>
+                  </SupportFiles>
+                </SupportFileData>
+
+              </DataProvider>
+
+            </DataProviders>
+
+          </TestSuite>
+
+        </TestSuites>
+      </TestSuiteData>
+
+    </DataProvider>
+  </DataProviders>
+</TestData>

@@ -12,9 +12,15 @@ $runId = 'SSAChrome_' + (Get-Date -Format 'yyyyMMdd_HHmmss')
 $logDirectory = Join-Path 'C:\data\CHT\7c4c4287\Reruns' $runId
 $report = Join-Path $root 'run-report.txt'
 
+function Stop-SsaReplayProcesses {
+    Get-Process -Name robocopy,tc,oaclient,TestMonitor,sth,wttsth,CLRTestHost -ErrorAction SilentlyContinue |
+        Stop-Process -Force -ErrorAction SilentlyContinue
+}
+
 if (-not (Test-Path -LiteralPath $psinfo)) { throw "Required replay input missing: $psinfo" }
 if (-not (Test-Path -LiteralPath $scenario)) { throw "Required replay input missing: $scenario" }
 if (-not (Test-Path -LiteralPath $context)) { throw "Required replay input missing: $context" }
+Stop-SsaReplayProcesses
 New-Item -ItemType Directory -Path $logDirectory -Force | Out-Null
 
 $section = ''
@@ -65,6 +71,7 @@ $timedOut = -not $process.WaitForExit($timeoutMilliseconds)
 if ($timedOut) {
     & "$env:SystemRoot\System32\taskkill.exe" /PID $process.Id /T /F | Out-Null
     [void]$process.WaitForExit(30000)
+    Stop-SsaReplayProcesses
 }
 [void]$outputTask.Wait(30000)
 [void]$errorTask.Wait(30000)
