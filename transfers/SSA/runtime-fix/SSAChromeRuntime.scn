@@ -94,15 +94,6 @@
                           <TestMethodData>
                             <TestMethods>
 
-                              <!-- BASE -->
-                              <TestMethod Signature="Void OASysSetup()"
-                                          DeclaringType="MS.Internal.Motif.TestClasses.OfficeTestClass"
-                                          Enabled="true" />
-
-                              <TestMethod Signature="Void OSGSetup()"
-                                          DeclaringType="MS.Internal.Test.Automation.Office.OSG.TestClasses.OSGTestClass"
-                                          Enabled="true" />
-
                               <!-- YOUR METHODS -->
                               <TestMethod Signature="Void Initialize()"
                                           DeclaringType="MS.Internal.Test.Automation.Office.Osg.Wss.Tests.SearchServiceApplication"
@@ -114,15 +105,6 @@
 
                               <TestMethod Signature="Void CleanUp()"
                                           DeclaringType="MS.Internal.Test.Automation.Office.Osg.Wss.Tests.SearchServiceApplication"
-                                          Enabled="true" />
-
-                              <!-- BASE -->
-                              <TestMethod Signature="Void OSGTeardown()"
-                                          DeclaringType="MS.Internal.Test.Automation.Office.OSG.TestClasses.OSGTestClass"
-                                          Enabled="true" />
-
-                              <TestMethod Signature="Void OASysTeardown()"
-                                          DeclaringType="MS.Internal.Motif.TestClasses.OfficeTestClass"
                                           Enabled="true" />
 
                             </TestMethods>

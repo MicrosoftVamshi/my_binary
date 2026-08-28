@@ -2,8 +2,8 @@ using System;
 using MS.Internal.Motif.WebDriver;
 using MS.Internal.Motif.Runtime;
 using MS.Internal.Motif.Runtime.TestAttributes;
+using MS.Internal.Motif.TestClasses;
 using MS.Internal.Mita.Logging;
-using MS.Internal.Test.Automation.Office.OSG.WSS.TestClasses;
 using Microsoft.SharePoint.Administration;
 
 namespace MS.Internal.Test.Automation.Office.Osg.Wss.Tests
@@ -19,7 +19,7 @@ namespace MS.Internal.Test.Automation.Office.Osg.Wss.Tests
     /// reset and crawl setup that this UI-only test does not need.
     /// </remarks>
     [TestClass]
-    public class SearchServiceApplication : WSSClientTestClass
+    public class SearchServiceApplication : TestClass
     {
         // The OWebDriver-owned browser for the whole test. Created in Initialize, disposed in CleanUp.
         private IWebDriver _driver;
@@ -34,9 +34,8 @@ namespace MS.Internal.Test.Automation.Office.Osg.Wss.Tests
         /// </summary>
         [Setup]
         [Timeout(1800)]
-        public override void Initialize()
+        public void Initialize()
         {
-            base.Initialize();
             _targetAdminUrl = SPAdministrationWebApplication.Local
                 .GetResponseUri(SPUrlZone.Default)
                 .ToString();
@@ -126,7 +125,7 @@ namespace MS.Internal.Test.Automation.Office.Osg.Wss.Tests
         /// A browser that already died must not prevent base cleanup.
         /// </remarks>
         [Teardown]
-        public override void CleanUp()
+        public void CleanUp()
         {
             try
             {
@@ -141,7 +140,6 @@ namespace MS.Internal.Test.Automation.Office.Osg.Wss.Tests
             finally
             {
                 _driver = null;
-                base.CleanUp();
             }
         }
     }
