@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using System.Text.RegularExpressions;
 using MS.Internal.Mita.Logging;
 using MS.Internal.Motif.Runtime;
 using MS.Internal.Motif.Runtime.TestAttributes;
@@ -14,7 +13,6 @@ namespace MS.Internal.Test.Automation.Office.Osg.Wss.Tests
     /// Prepares the pinned Chrome and ChromeDriver pair required by Motif OWebDriver.
     /// </summary>
     [TestClass]
-    [SupportFile("//builttestcasefiles/webautoex/{Processor}/{BuildType}/x-none/chromedriverlauncher.exe", FileAlias = "chromedriverlauncher")]
     public sealed class ChromeSetup : TestClass
     {
         private const string ChromeVersion = "151.0.7922.138";
@@ -27,7 +25,6 @@ namespace MS.Internal.Test.Automation.Office.Osg.Wss.Tests
         {
             string motifFolder = Path.GetDirectoryName(typeof(MotifLibrary).Assembly.Location);
             string webDriverFolder = Path.Combine(motifFolder, "WebDriver");
-            string launcherSource = SupportFiles["chromedriverlauncher"].FullName;
             string chromeInstallFolder = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 "Google", "Chrome", "Application");
@@ -52,7 +49,6 @@ namespace MS.Internal.Test.Automation.Office.Osg.Wss.Tests
                 startInfo.EnvironmentVariables["MOTIF_CHROME_VERSION"] = ChromeVersion;
                 startInfo.EnvironmentVariables["MOTIF_CHROME_INSTALL_FOLDER"] = chromeInstallFolder;
                 startInfo.EnvironmentVariables["MOTIF_WEBDRIVER_FOLDER"] = webDriverFolder;
-                startInfo.EnvironmentVariables["MOTIF_CHROMEDRIVER_LAUNCHER_SOURCE"] = launcherSource;
 
                 using (Process process = new Process { StartInfo = startInfo })
                 {
@@ -108,10 +104,8 @@ $chromeExtract = Join-Path $root 'chrome'
 $driverExtract = Join-Path $root 'driver'
 $chromeFolder = $env:MOTIF_CHROME_INSTALL_FOLDER
 $webDriverFolder = $env:MOTIF_WEBDRIVER_FOLDER
-$launcherSource = $env:MOTIF_CHROMEDRIVER_LAUNCHER_SOURCE
 $chromeExe = Join-Path $chromeFolder 'chrome.exe'
 $driverExe = Join-Path $webDriverFolder 'chromedriver.exe'
-$launcherTarget = Join-Path $webDriverFolder 'ChromeDriverLauncher.exe'
 
 function Get-Version([string]$path) {
     if (Test-Path -LiteralPath $path) { return (Get-Item -LiteralPath $path).VersionInfo.ProductVersion }
@@ -146,11 +140,6 @@ if ((Get-Version $driverExe) -ne $version) {
     if (-not (Test-Path -LiteralPath $driverSource)) { throw 'ChromeDriver payload is incomplete.' }
     Copy-Item -LiteralPath $driverSource -Destination $driverExe -Force
 }
-if (-not (Test-Path -LiteralPath $launcherSource)) { throw ('ChromeDriverLauncher support file is missing: ' + $launcherSource) }
-if (-not [string]::Equals($launcherSource, $launcherTarget, [StringComparison]::OrdinalIgnoreCase)) {
-    Copy-Item -LiteralPath $launcherSource -Destination $launcherTarget -Force
-}
-
 $chromeVersion = Get-Version $chromeExe
 $driverVersion = Get-Version $driverExe
 if ($chromeVersion -ne $version -or $driverVersion -ne $version) {

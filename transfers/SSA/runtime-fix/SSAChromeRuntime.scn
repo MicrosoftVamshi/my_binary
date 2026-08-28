@@ -145,25 +145,7 @@
                     <Assembly>//builttestcasefiles/ststest/{Processor}/{BuildType}/x-none/ms.internal.test.automation.office.osg.wss.tests.dll</Assembly>
                   </Assemblies>
 
-                  <Dependencies>
-                    <Dependency>//builttestcasefiles/sptasklib/{processor}/{buildtype}/{culture}/References/WebDriver/owebdriver.dll</Dependency>
-                  </Dependencies>
                 </AssemblyData>
-
-              </DataProvider>
-
-              <DataProvider Description=""
-                            AssemblyQualifiedName="MS.Internal.Motif.FileDepot.SupportFileData, Motif, Version=13.0.0.0, Culture=neutral, PublicKeyToken=48e046c834625a88">
-
-                <SupportFileData>
-                  <SupportFiles>
-                    <SupportFile FileAlias="chromedriverlauncher"
-                                 AutoCache="true"
-                                 Cache="WorkingCache"
-                                 Recurse="NoRecurse"
-                                 FileType="Data">//builttestcasefiles/webautoex/{processor}/{buildtype}/x-none/chromedriverlauncher.exe</SupportFile>
-                  </SupportFiles>
-                </SupportFileData>
 
               </DataProvider>
 
