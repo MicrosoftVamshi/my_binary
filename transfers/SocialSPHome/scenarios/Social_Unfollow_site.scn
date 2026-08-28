@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestData Version="2.1" xmlns="http://motifschemas/SCNSchema">
+  <DataProviders>
+    <DataProvider AssemblyQualifiedName="MS.Internal.Motif.Runtime.TestSuiteData, Motif" Version="2.2">
+      <TestSuiteData>
+        <TestSuites>
+          <TestSuite UserDescription="Creates and follows isolated sites, unfollows them, and verifies count zero.">
+            <DataProviders>
+              <DataProvider AssemblyQualifiedName="MS.Internal.Motif.Runtime.TestClassData, Motif" Version="2.1">
+                <TestClassData>
+                  <TestClasses>
+                    <TestClass AssemblyQualifiedName="MS.Internal.Test.Automation.SharePoint.MySite.FollowingCounts.SitesImFollowing, MS.Internal.Test.Automation.Office.Osg.Wss.Tests">
+                      <DataProviders>
+                        <DataProvider AssemblyQualifiedName="MS.Internal.Motif.Runtime.TestMethodData, Motif" Version="2.1">
+                          <TestMethodData>
+                            <TestMethods>
+                              <TestMethod Signature="Void OASysSetup()" DeclaringType="MS.Internal.Motif.TestClasses.OfficeTestClass" />
+                              <TestMethod Signature="Void OSGSetup()" DeclaringType="MS.Internal.Test.Automation.Office.OSG.TestClasses.OSGTestClass" />
+                              <TestMethod Signature="Void SPTestSetup()" DeclaringType="MS.Internal.Motif.SharePoint.TestClasses.SPTestClass" />
+                              <TestMethod Signature="void AcquireAccount()" DeclaringType="MS.Internal.Test.Automation.SharePoint.MySite.FollowingCounts.SitesImFollowing" />
+                              <TestMethod Signature="void GetMySiteURLs()" DeclaringType="MS.Internal.Test.Automation.SharePoint.MySite.FollowingCounts.SitesImFollowing" />
+                              <TestMethod Signature="void CreateAndFollowSites()" DeclaringType="MS.Internal.Test.Automation.SharePoint.MySite.FollowingCounts.SitesImFollowing" />
+                              <TestMethod Signature="void VerifySitesCount()" DeclaringType="MS.Internal.Test.Automation.SharePoint.MySite.FollowingCounts.SitesImFollowing" />
+                              <TestMethod Signature="void DeleteSubsiteDisposeUsers()" DeclaringType="MS.Internal.Test.Automation.SharePoint.MySite.FollowingCounts.SitesImFollowing" />
+                              <TestMethod Signature="void DisposeUser()" DeclaringType="MS.Internal.Test.Automation.SharePoint.MySite.FollowingCounts.SitesImFollowing" />
+                              <TestMethod Signature="Void SPTestTeardown()" DeclaringType="MS.Internal.Motif.SharePoint.TestClasses.SPTestClass" />
+                              <TestMethod Signature="Void OSGTeardown()" DeclaringType="MS.Internal.Test.Automation.Office.OSG.TestClasses.OSGTestClass" />
+                              <TestMethod Signature="Void OASysTeardown()" DeclaringType="MS.Internal.Motif.TestClasses.OfficeTestClass" />
+                            </TestMethods>
+                          </TestMethodData>
+                        </DataProvider>
+                      </DataProviders>
+                    </TestClass>
+                  </TestClasses>
+                </TestClassData>
+              </DataProvider>
+              <DataProvider AssemblyQualifiedName="MS.Internal.Motif.Runtime.AssemblyData, Motif" Version="2.2">
+                <AssemblyData>
+                  <Assemblies>
+                    <Assembly>//builttestcasefiles/ststest/{Processor}/{BuildType}/x-none/ms.internal.test.automation.office.osg.wss.tests.dll</Assembly>
+                  </Assemblies>
+                </AssemblyData>
+              </DataProvider>
+            </DataProviders>
+          </TestSuite>
+        </TestSuites>
+      </TestSuiteData>
+    </DataProvider>
+  </DataProviders>
+</TestData>
