@@ -14,10 +14,6 @@ $compiler = Join-Path $root 'tools\roslyn\csc.exe'
 $signingKey = Join-Path $root 'keys\MotifTest.snk'
 $jwtReference = Join-Path $root 'refs\JWT-System.IdentityModel.Tokens.Jwt.dll'
 $enterpriseServicesWrapper = Join-Path $root 'refs\System.EnterpriseServices.Wrapper.dll'
-$dependencyManifest = Join-Path $root 'resources\DependencyManifest.bid'
-$formsSchema = Join-Path $root 'resources\FormsCustomization\schema.xml'
-$formsFeature = Join-Path $root 'resources\FormsCustomization\feature.xml'
-$formsListTemplate = Join-Path $root 'resources\FormsCustomization\listtemplate.xml'
 $outputRoot = Join-Path $root 'bin'
 $intermediateRoot = Join-Path $root 'obj'
 $assemblyName = 'MS.Internal.Test.Automation.Office.Osg.Wss.Tests'
@@ -29,11 +25,7 @@ foreach ($requiredPath in @(
     $compiler,
     $signingKey,
     $jwtReference,
-    $enterpriseServicesWrapper,
-    $dependencyManifest,
-    $formsSchema,
-    $formsFeature,
-    $formsListTemplate
+    $enterpriseServicesWrapper
 )) {
     if (-not (Test-Path -LiteralPath $requiredPath)) {
         throw "Portable build payload is incomplete: $requiredPath"
@@ -85,10 +77,6 @@ $arguments = @(
     '/nowarn:0612,0618,1607,1685'
     '/delaysign-'
     "/keyfile:`"$signingKey`""
-    "/resource:`"$dependencyManifest`""
-    "/resource:`"$formsSchema`",FORMSLISTSCHEMAXML"
-    "/resource:`"$formsFeature`",FORMSFEATUREXML"
-    "/resource:`"$formsListTemplate`",FORMSLISTTEMPLATEXML"
     "/out:`"$outputAssembly`""
     "/pdb:`"$outputPdb`""
 )
