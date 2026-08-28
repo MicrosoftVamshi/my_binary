@@ -1,0 +1,4 @@
+_generated\assemblyinfo.cs
+Local_Search\ChromeSetup.cs
+Local_Search\SearchPageObjects.cs
+Local_Search\SearchServiceApplication.cs
