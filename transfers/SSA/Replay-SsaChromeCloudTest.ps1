@@ -5,8 +5,9 @@ param()
 $ErrorActionPreference = 'Stop'
 $root = 'C:\SsaChromeValidation'
 $psinfo = 'C:\data\CHT\7c4c4287\UserLogs\a8c7267f\TestResults\TestConsoleExecutionLogs\SearchServiceApplication_2101.psinfo'
-$scenario = Join-Path $root 'SearchServiceApplication.scn'
+$scenario = Join-Path $root 'SSAChromeRuntime.scn'
 $context = 'C:\data\CHT\7c4c4287\JWD_a8c7267f\ststest\SearchServiceApplicationLeftNavCheck\context.xml'
+$timeoutMilliseconds = 120000
 $runId = 'SSAChrome_' + (Get-Date -Format 'yyyyMMdd_HHmmss')
 $logDirectory = Join-Path 'C:\data\CHT\7c4c4287\Reruns' $runId
 $report = Join-Path $root 'run-report.txt'
@@ -58,9 +59,18 @@ $startInfo.RedirectStandardError = $true
 $process = New-Object Diagnostics.Process
 $process.StartInfo = $startInfo
 [void]$process.Start()
-$outputText = $process.StandardOutput.ReadToEnd()
-$errorText = $process.StandardError.ReadToEnd()
-$process.WaitForExit()
+$outputTask = $process.StandardOutput.ReadToEndAsync()
+$errorTask = $process.StandardError.ReadToEndAsync()
+$timedOut = -not $process.WaitForExit($timeoutMilliseconds)
+if ($timedOut) {
+    & "$env:SystemRoot\System32\taskkill.exe" /PID $process.Id /T /F | Out-Null
+    [void]$process.WaitForExit(30000)
+}
+[void]$outputTask.Wait(30000)
+[void]$errorTask.Wait(30000)
+$outputText = if ($outputTask.IsCompleted) { $outputTask.Result } else { 'Standard output did not close after process termination.' }
+$errorText = if ($errorTask.IsCompleted) { $errorTask.Result } else { 'Standard error did not close after process termination.' }
+$exitCode = if ($timedOut) { -1 } else { $process.ExitCode }
 $outputText | Set-Content $stdout
 $errorText | Set-Content $stderr
 
@@ -78,7 +88,9 @@ $stderrTail = @(Get-Content -LiteralPath $stderr -ErrorAction SilentlyContinue |
 
 $lines = @(
     "RUN_ID=$runId"
-    "EXIT_CODE=$($process.ExitCode)"
+    "EXIT_CODE=$exitCode"
+    "TIMED_OUT=$timedOut"
+    "TIMEOUT_SECONDS=$($timeoutMilliseconds / 1000)"
     "LOG_DIRECTORY=$logDirectory"
     "EXECUTABLE=$executable"
     "ARGUMENTS=$arguments"

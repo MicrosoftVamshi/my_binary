@@ -4,7 +4,9 @@ $root = 'C:\SsaChromeValidation'
 $compiler = Join-Path $root 'compiler'
 $payload = Join-Path $root 'payload'
 $builtDll = Join-Path $compiler 'bin\MS.Internal.Test.Automation.Office.Osg.Wss.Tests.dll'
-$scenario = Join-Path $root 'SearchServiceApplication.scn'
+$scenario = Join-Path $root 'SSAChromeRuntime.scn'
+$legacyScenario = Join-Path $root 'SearchServiceApplication.scn'
+$fileList = Join-Path $root 'files.txt'
 $report = Join-Path $root 'prepare-report.txt'
 
 if (-not (Test-Path $builtDll -PathType Leaf)) { throw "Built DLL missing: $builtDll" }
@@ -13,7 +15,9 @@ $assembly = $scenarioXml.SelectSingleNode("//*[local-name()='Assembly']")
 if (-not $assembly) { throw 'SSA Assembly element was not found.' }
 $assembly.InnerText = $builtDll
 $scenarioXml.Save($scenario)
-Unblock-File $builtDll, $scenario
+Set-Content -LiteralPath $fileList -Value @($scenario, $builtDll)
+Remove-Item -LiteralPath $legacyScenario -Force -ErrorAction SilentlyContinue
+Unblock-File $builtDll, $scenario, $fileList
 
 $jobRoots = @(
     Get-ChildItem 'C:\data\CHT\*\UserLogs\*\TestResults\ststest\SearchServiceApplicationLeftNavCheck' -Directory -ErrorAction SilentlyContinue
@@ -34,6 +38,7 @@ $lines = @(
     "BUILD_DLL=$builtDll"
     "BUILD_DLL_HASH=$((Get-FileHash $builtDll -Algorithm SHA256).Hash)"
     "SCENARIO=$scenario"
+    "FILE_LIST=$fileList"
     "JOB_ROOT=$($jobRoot.FullName)"
     "FILES_COUNT=$($files.Count)"
     "PSINFO_COUNT=$($psinfo.Count)"
